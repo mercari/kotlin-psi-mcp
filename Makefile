@@ -1,5 +1,7 @@
-# Get plugin version
-PLUGIN_VERSION := $(shell grep 'version = ' build.gradle.kts | sed 's/.*"\(.*\)".*/\1/')
+# Get plugin version. Anchored to the top-level, quoted assignment so it does not
+# also match the indented `version = project.version.toString()` inside
+# intellijPlatform { pluginConfiguration { ... } }.
+PLUGIN_VERSION := $(shell grep -m1 -E '^version = "' build.gradle.kts | sed 's/.*"\(.*\)".*/\1/')
 
 # Default target
 all: clean build package
