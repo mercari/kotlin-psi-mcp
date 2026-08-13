@@ -1,0 +1,51 @@
+# claude setting files
+.claude/settings.local.json
+
+# Build directories
+release/
+build/
+*/build/
+
+# IntelliJ Platform Gradle plugin local cache
+.intellijPlatform/
+
+# Gradle files
+.gradle/
+gradle-app.setting
+!gradle-wrapper.jar
+!gradle/wrapper/gradle-wrapper.properties
+
+# IDE files
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Local configuration files
+local.properties
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Kotlin compiled files
+*.class
+
+# Log files
+*.log
+
+# Package files
+*.jar
+*.war
+*.ear
+# ...but always track Gradle wrapper jars — they are required to run ./gradlew
+# (covers both the root wrapper and the test-fixtures/audit-sample wrapper).
+!**/gradle/wrapper/gradle-wrapper.jar
+
+# Virtual machine crash logs
+hs_err_pid*

@@ -1,0 +1,65 @@
+<idea-plugin>
+    <id>com.mercari.psi.mcp</id>
+    <name>PSI MCP Server</name>
+    <!-- <version> is injected at build time by patchPluginXml from build.gradle.kts (project.version). -->
+    <vendor email="jetbrain-plugin@mercari.com" url="https://github.com/mercari">Mercari, Inc.</vendor>
+
+    <description><![CDATA[
+    Exposes JetBrains PSI analysis capabilities via MCP (Model Context Protocol) for AI coding assistants.
+    
+    Features:
+    - Semantic code analysis via PSI
+    - Find usages and references
+    - Symbol discovery and navigation
+    - Inheritance hierarchy analysis
+    - HTTP API for external tool integration
+
+    This is an independent project and is not affiliated with or endorsed by
+    JetBrains s.r.o. or Google LLC. "IntelliJ", "JetBrains", and "Android Studio"
+    are trademarks of their respective owners.
+
+    License: MIT (see LICENSE file in the project repository)
+    ]]></description>
+
+    <change-notes><![CDATA[
+    <em>Version 0.1.0</em>
+    <ul>
+        <li>Initial public release</li>
+        <li>PSI-backed navigation, search, and type inspection tools</li>
+        <li>Refactoring tools: rename, move, safe delete, extract interface, add parameter</li>
+        <li>Diagnostics, quick fixes, import handling, and formatting tools</li>
+        <li>Local HTTP endpoint for MCP clients</li>
+    </ul>
+    ]]></change-notes>
+
+    <!-- Product and plugin compatibility requirements -->
+    <depends>com.intellij.modules.platform</depends>
+    <depends>org.jetbrains.kotlin</depends>
+    <!-- JavaPsiFacade / JavaDirectoryService / JavaRecursiveElementVisitor used by
+         AddImportTool, MoveFileTool, GetCallHierarchyTool. Java was split into its own
+         plugin in 2019.2, so the dependency must be declared explicitly. -->
+    <depends>com.intellij.modules.java</depends>
+    <!-- GradleConstants used by GradleSyncTool; declaring this resolves the package at runtime -->
+    <depends>org.jetbrains.plugins.gradle</depends>
+
+    <!-- Extension points defined by the plugin -->
+    <extensions defaultExtensionNs="com.intellij">
+        <postStartupActivity implementation="com.mercari.psi.mcp.PsiMcpActivity"/>
+        <!-- The server is a single per-machine owner, so its state and lifecycle
+             are application-level, not per-project. -->
+        <applicationService serviceImplementation="com.mercari.psi.mcp.PsiMcpServerManager"/>
+
+        <!-- Settings page (application-level: the enable switch + served-project
+             dropdown are machine-wide, and the dropdown lists every open project). -->
+        <applicationConfigurable
+            parentId="tools"
+            instance="com.mercari.psi.mcp.settings.PsiMcpConfigurable"
+            id="PsiMcpConfigurable"
+            displayName="PSI MCP Server"/>
+    </extensions>
+    
+    <!-- K2 compatibility declarations -->
+    <extensions defaultExtensionNs="org.jetbrains.kotlin">
+        <supportsKotlinPluginMode supportsK2="true" supportsK1="true"/>
+    </extensions>
+</idea-plugin>
