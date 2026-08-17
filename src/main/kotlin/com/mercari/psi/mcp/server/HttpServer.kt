@@ -65,7 +65,7 @@ class PsiHttpServer(private val port: Int = 51234) {
     fun start() {
         // Bind to loopback so the server is never reachable from other machines.
         server = Server(InetSocketAddress("127.0.0.1", port))
-        
+
         val handler = object : AbstractHandler() {
             override fun handle(
                 target: String,
@@ -78,7 +78,11 @@ class PsiHttpServer(private val port: Int = 51234) {
                 // Host (DNS-rebinding defense) and ANY request carrying an Origin — no
                 // browser client is supported, and native MCP clients (Claude Code,
                 // curl) send no Origin. Rule lives in RequestGuard (unit-tested).
-                if (!RequestGuard.isAllowed(request.getHeader("Host"), request.getHeader("Origin"))) {
+                if (!RequestGuard.isAllowed(
+                        request.getHeader("Host"),
+                        request.getHeader("Origin")
+                    )
+                ) {
                     sendResponse(response, 403, "Forbidden")
                     baseRequest.isHandled = true
                     return
@@ -87,23 +91,29 @@ class PsiHttpServer(private val port: Int = 51234) {
                     target == "/health" && request.method == "GET" -> {
                         sendResponse(response, 200, "OK")
                     }
+
                     target == "/api/tools" && request.method == "GET" -> {
                         handleListTools(response)
                     }
+
                     target.startsWith("/api/tools/") && request.method == "POST" -> {
                         handleToolExecution(target, request, response)
                     }
+
                     target == "/mcp" && request.method == "POST" -> {
                         handleMcpRequest(request, response)
                     }
+
                     target == "/mcp" && request.method == "GET" -> {
                         // Optional SSE stream for server-initiated messages.
                         // We have none yet, so respond 405.
                         sendResponse(response, 405, "Method Not Allowed")
                     }
+
                     target == "/mcp" && request.method == "OPTIONS" -> {
                         sendResponse(response, 204, "")
                     }
+
                     else -> {
                         sendResponse(response, 404, "Not found")
                     }
@@ -111,7 +121,7 @@ class PsiHttpServer(private val port: Int = 51234) {
                 baseRequest.isHandled = true
             }
         }
-        
+
         server?.handler = handler
         server?.start()
     }
@@ -129,24 +139,24 @@ class PsiHttpServer(private val port: Int = 51234) {
                 "inputSchema" to tool.getInputSchema()
             )
         }
-        
+
         val responseJson = gson.toJson(toolSchemas)
         sendResponse(response, 200, responseJson, "application/json")
     }
 
     private fun handleToolExecution(
         target: String,
-        request: HttpServletRequest, 
+        request: HttpServletRequest,
         response: HttpServletResponse
     ) {
         val toolName = target.removePrefix("/api/tools/")
-        
+
         val tool = tools[toolName]
         if (tool == null) {
             sendResponse(response, 404, gson.toJson(mapOf("error" to "Tool not found: $toolName")))
             return
         }
-        
+
         try {
             val requestBody = request.reader.readText()
             val arguments = if (requestBody.isNotBlank()) {
@@ -154,7 +164,7 @@ class PsiHttpServer(private val port: Int = 51234) {
             } else {
                 JsonObject()
             }
-            
+
             val result = tool.execute(arguments)
             val responseJson = gson.toJson(mapOf("result" to result))
             sendResponse(response, 200, responseJson, "application/json")
@@ -174,6 +184,7 @@ class PsiHttpServer(private val port: Int = 51234) {
 
     private val protocolVersion = "2024-11-05"
     private val serverName = "jetbrain-psi-mcp-server"
+
     // Single-sourced from the plugin descriptor, whose <version> patchPluginXml
     // injects from build.gradle.kts at build time — so the version lives in exactly
     // one place (build.gradle.kts). "dev" is a fallback for sandbox/test runs where
@@ -187,16 +198,16 @@ class PsiHttpServer(private val port: Int = 51234) {
     // indexing is done before trusting any resolution result.
     private val serverInstructions =
         "This server exposes IntelliJ/Android Studio PSI analysis for a SINGLE selected project, bound " +
-        "to the fixed HTTP port $port. One IDE instance owns the port at a time; which project it serves " +
-        "is chosen by the human in Settings ▸ Tools ▸ PSI MCP Server (enable switch + project dropdown). " +
-        "At the START of each session — and again whenever a result looks wrong (a symbol you expect to " +
-        "resolve returns \"could not resolve\" or \"file not indexed\", or find-usages comes back empty) — " +
-        "call the 'check-sync-status' tool with the absolute root path of the project you intend to work " +
-        "in. Only trust resolution / position-based results when it returns projectMatch=MATCH and " +
-        "state=SMART_MODE. If projectMatch=MISMATCH (or it reports no served project), a different project " +
-        "is selected — ask the human to pick the intended project in the settings dropdown, or, if it is " +
-        "open in another IDE instance, to enable the server there (disabling it in the current owner " +
-        "first). If state=DUMB_MODE, indexing is still running (wait and retry)."
+                "to the fixed HTTP port $port. One IDE instance owns the port at a time; which project it serves " +
+                "is chosen by the human in Settings ▸ Tools ▸ PSI MCP Server (enable switch + project dropdown). " +
+                "At the START of each session — and again whenever a result looks wrong (a symbol you expect to " +
+                "resolve returns \"could not resolve\" or \"file not indexed\", or find-usages comes back empty) — " +
+                "call the 'check-sync-status' tool with the absolute root path of the project you intend to work " +
+                "in. Only trust resolution / position-based results when it returns projectMatch=MATCH and " +
+                "state=SMART_MODE. If projectMatch=MISMATCH (or it reports no served project), a different project " +
+                "is selected — ask the human to pick the intended project in the settings dropdown, or, if it is " +
+                "open in another IDE instance, to enable the server there (disabling it in the current owner " +
+                "first). If state=DUMB_MODE, indexing is still running (wait and retry)."
 
     private fun handleMcpRequest(request: HttpServletRequest, response: HttpServletResponse) {
         val requestBody = request.reader.readText()
@@ -260,10 +271,12 @@ class PsiHttpServer(private val port: Int = 51234) {
                 if (isNotification) null
                 else jsonRpcResult(id, initializeResult())
             }
+
             method == "ping" -> {
                 if (isNotification) null
                 else jsonRpcResult(id, JsonObject())
             }
+
             method.startsWith("notifications/") -> {
                 // Fire-and-forget; always 202 via null.
                 null
@@ -273,10 +286,12 @@ class PsiHttpServer(private val port: Int = 51234) {
                 if (isNotification) null
                 else jsonRpcResult(id, toolsListResult())
             }
+
             method == "tools/call" -> {
                 if (isNotification) null
                 else handleToolsCall(id, req.getAsJsonObject("params"))
             }
+
             else -> {
                 if (isNotification) null
                 else jsonRpcError(id, -32601, "Method not found: $method")
