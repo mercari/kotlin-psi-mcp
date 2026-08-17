@@ -1,4 +1,5 @@
 import org.jetbrains.intellij.platform.gradle.IntelliJPlatformType
+import org.jetbrains.intellij.platform.gradle.tasks.VerifyPluginTask
 
 plugins {
     id("org.jetbrains.intellij.platform") version "2.6.0"
@@ -61,9 +62,86 @@ intellijPlatform {
     }
 
     pluginVerification {
+        // One IDE per major branch across the supported range, so a break in any
+        // single platform version is caught. Verifying only the compile-time target
+        // (251) left 252/253/261 unchecked.
+        //
+        // Pinned explicitly rather than via recommended()/printProductsReleases:
+        // those read data.services.jetbrains.com, which lags the artifact
+        // repository badly (it reported 2025.3 as latest while the repo already
+        // published 2026.2.x), and recommended() then fails to resolve.
+        // Authoritative version list:
+        // https://www.jetbrains.com/intellij-repository/releases/com/jetbrains/intellij/idea/ideaIC/maven-metadata.xml
+        //
+        // useInstaller = false pulls the repackaged archive instead of the macOS
+        // .dmg installer, which is not published for every version.
+        //
+        // The matrix covers exactly the declared compatibility range (251-261.*).
+        //
+        // 2026.2 (262) is deliberately NOT here: it sits above untilBuild, and the
+        // plugin currently FAILS on it — MoveFileTool references
+        // org.jetbrains.kotlin.idea.refactoring.move.KotlinAwareMoveFilesOrDirectoriesProcessor,
+        // which no longer resolves in 262, so `move-file` would throw
+        // NoSuchClassError at runtime. Fix that before widening untilBuild, and add
+        // the 262 entry back here to confirm. To check it ad hoc without failing the
+        // build, add the line below and run with failureLevel relaxed:
+        //   ide(IntelliJPlatformType.IntellijIdeaCommunity, "2026.2.1", useInstaller = false)
         ides {
-            ide(IntelliJPlatformType.IntellijIdeaCommunity, "2025.1")
+            ide(IntelliJPlatformType.IntellijIdeaCommunity, "2025.1", useInstaller = false)
+            ide(IntelliJPlatformType.IntellijIdeaCommunity, "2025.2.6", useInstaller = false)
+            ide(IntelliJPlatformType.IntellijIdeaCommunity, "2025.3.6.1", useInstaller = false)
+            ide(IntelliJPlatformType.IntellijIdeaCommunity, "2026.1.5", useInstaller = false)
+
+            // Android Studio ships a different platform build than IntelliJ of the
+            // same nominal year, with its own Kotlin/Java/Gradle plugin versions —
+            // the most likely place for this plugin to break, since it is the
+            // primary target. One stable release per platform major:
+            //
+            //   251 -> 2025.1.4.8  (Narwhal 4 Feature Drop)
+            //   252 -> 2025.2.3.9  (Otter 3 Feature Drop)
+            //   253 -> 2025.3.4.6  (Panda 4)
+            //   261 -> 2026.1.3.7  (Quail 3)
+            //
+            // Android Studio has no 262 build in any channel yet, so AS users are
+            // entirely within the declared 251-261.* range. Version -> platformBuild
+            // mapping comes from https://jb.gg/android-studio-releases-list.xml
+            // (the <platformBuild> element); AS resolves through
+            // androidStudioInstallers(), so it needs useInstaller = true (default)
+            // rather than the archive used for IC above.
+            //
+            // Only 251 and 252 can be resolved by download. From the Panda (253)
+            // line on, Google names installers after the codename
+            // (android-studio-panda4-mac_arm.dmg) instead of the version, which
+            // this plugin's URL pattern cannot build. The fix landed in plugin
+            // 2.12.0 ("handle the new archive name convention"), but 2.12.0+
+            // require Gradle 9 — so covering 253/261 by download means upgrading
+            // Gradle first. Until then, 261 is covered via the local install below.
+            ide(IntelliJPlatformType.AndroidStudio, "2025.1.4.8")
+            ide(IntelliJPlatformType.AndroidStudio, "2025.2.3.9")
+
+            // NOTE: `local(<path>)` cannot be used here on plugin 2.6.0. Its helper
+            // registers the local IDE into the main INTELLIJ_PLATFORM_DEPENDENCY
+            // registry rather than the verifier-only one, so it collides with the
+            // intellijIdeaCommunity("2025.1") dependency above and fails with
+            // "configuration already contains ... IC-2025.1 (installer)".
+            // To verify against a locally installed IDE (e.g. Android Studio 253/261,
+            // which cannot be resolved by download — see above), invoke the Plugin
+            // Verifier CLI directly; see DEVELOPMENT.md.
         }
+
+        // Fail only on the levels that actually make a plugin unusable. Advisory
+        // findings (deprecated / override-only / internal API / scheduled-for-removal)
+        // are still printed in full and still written to build/reports/pluginVerifier,
+        // they just do not fail the build.
+        //
+        // For a pre-submission audit, temporarily swap this for
+        // `VerifyPluginTask.FailureLevel.ALL` to turn every advisory into a failure.
+        failureLevel = listOf(
+            VerifyPluginTask.FailureLevel.COMPATIBILITY_PROBLEMS,
+            VerifyPluginTask.FailureLevel.INVALID_PLUGIN,
+            VerifyPluginTask.FailureLevel.MISSING_DEPENDENCIES,
+        )
+        verificationReportsFormats = VerifyPluginTask.VerificationReportsFormats.ALL
     }
 }
 

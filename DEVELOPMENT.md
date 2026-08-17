@@ -64,6 +64,50 @@ curl -s -X POST http://127.0.0.1:51234/mcp \
 
 `test-fixtures/README.md` documents the fixture and a full per-tool test matrix.
 
+## Verifying Compatibility
+
+`./gradlew verifyPlugin` runs the IntelliJ Plugin Verifier against every IDE in
+`pluginVerification.ides` (see `build.gradle.kts`) and writes plain/HTML/Markdown
+reports to `build/reports/pluginVerifier/<IDE>/`. `./gradlew
+verifyPluginProjectConfiguration` and `verifyPluginStructure` are cheap
+companion checks worth running first.
+
+The matrix pins one IDE per platform major across the declared range, because
+the default setup verifies only the compile-time target. Versions are pinned by
+hand rather than via `recommended()`: that resolves through
+`data.services.jetbrains.com`, which lags the artifact repository badly and then
+fails to resolve. Authoritative version lists:
+
+- IntelliJ — <https://www.jetbrains.com/intellij-repository/releases/com/jetbrains/intellij/idea/ideaIC/maven-metadata.xml>
+- Android Studio — <https://jb.gg/android-studio-releases-list.xml> (use the
+  `<platformBuild>` element; an Android Studio version number does not tell you
+  its platform build)
+
+Before submitting to the Marketplace, temporarily set `failureLevel =
+VerifyPluginTask.FailureLevel.ALL` to promote every advisory finding
+(deprecated / override-only / internal API) into a build failure.
+
+### Verifying against a locally installed IDE
+
+Android Studio 253 and newer cannot be resolved by download on this build:
+Google names those installers after the codename
+(`android-studio-panda4-mac_arm.dmg`) instead of the version, which the Gradle
+plugin's URL pattern cannot construct. The fix is in IntelliJ Platform Gradle
+Plugin 2.12.0, but 2.12.0+ require Gradle 9. `pluginVerification.ides.local()`
+is also unusable on 2.6.0 — it registers the local IDE into the main platform
+dependency configuration and collides with the `intellijIdeaCommunity`
+dependency.
+
+Until either is resolved, verify against an installed IDE by calling the
+Plugin Verifier CLI directly (the jar is already in the Gradle cache):
+
+```bash
+java -jar ~/.gradle/caches/modules-2/files-2.1/org.jetbrains.intellij.plugins/verifier-cli/1.409/*/verifier-cli-1.409-all.jar \
+  check-plugin release/jetbrain-psi-plugin-<version>.zip \
+  "/path/to/Android Studio.app/Contents"
+```
+
+
 ## Adding a Tool
 
 1. **Implement it** — add a class under
