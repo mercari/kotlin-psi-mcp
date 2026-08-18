@@ -1,16 +1,14 @@
-# Android Studio PSI MCP Server
+# Android Studio / IntelliJ PSI MCP Server
 
-Bring Android Studio's powerful semantic code analysis to AI assistants via the Model Context Protocol (MCP).
+Bring Android Studio and IntelliJ's powerful semantic code analysis to AI assistants via the Model Context Protocol (MCP).
 
 Get precise, context-aware code understanding that goes far beyond text-based searching - find usages, navigate to definitions, explore inheritance hierarchies, and more.
 
-While the underlying approach applies to any JetBrains IDE in principle, this plugin requires an IDE that bundles the Kotlin, Java, and Gradle plugins — it declares a hard dependency on each (see `plugin.xml`) and is built around Kotlin's K2 semantic analysis, with partial Java support. In practice that means IntelliJ IDEA and Android Studio, which are the only IDEs it is actively developed and tested against.
-
-
+This plugin requires an IDE that bundles the Kotlin, Java, and Gradle plugins, as it declares a hard dependency on each of them (see `plugin.xml`) and is built around Kotlin's K2 semantic analysis, with partial Java support. So, conceptually it can work on any JetBrains IDEs, but this project aims to have deeper analysis into Kotlin specifically for Android Development in mind, so the support for other languages of JetBrains IDEs are intentionally left out.
 
 ## Quick Start
 1. Install the Android Studio plugin:
-   - Download `jetbrain-psi-plugin-x.y.z.zip` from [releases](https://github.com/mercari/jetbrain-psi-mcp-server/releases)
+   - Download `psi-plugin-x.y.z.zip` from [releases](https://github.com/mercari/kotlin-psi-mcp/releases)
    - Install in Android Studio: `Settings > Plugins > Install Plugin from Disk`
    - Restart IDE
    - (optional) In `Settings > Tools > PSI MCP Server`, choose which open project the server serves (the HTTP port is fixed at `51234`)
@@ -19,7 +17,7 @@ While the underlying approach applies to any JetBrains IDE in principle, this pl
 
     ```json
     "mcpServers": {
-      "jetbrain-psi-mcp-server": {
+      "kotlin-psi-mcp-server": {
         "type": "http",
         "url": "http://localhost:51234/mcp"
       }
@@ -49,7 +47,7 @@ If you have multiple projects opened, you can use the dropdown box (shown above)
 
 For Claude:
 ```shell
-claude mcp list | grep jetbrain-psi-mcp-server
+claude mcp list | grep kotlin-psi-mcp-server
 ```
 
 You should see the server listed and `✓ Connected`.
