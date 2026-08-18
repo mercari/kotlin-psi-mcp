@@ -39,6 +39,11 @@ If your model doesn't automatically invoke PSI MCP, you can be explicit:
 > find usages of ClickableRow (using PSI MCP)
 ```
 
+## Enabling PSI MCP in the setting
+<img width="1468" height="987" alt="Screenshot 2026-08-18 at 10 02 10" src="https://github.com/user-attachments/assets/32bc6e77-56cb-4b34-8668-55ab99f59e72" />
+
+If you have multiple projects opened, you can use the dropdown box (shown above) to select which project to be connected to the PSI MCP.
+
 ## Testing
 1. Make sure MCP server is working, run this:
 
