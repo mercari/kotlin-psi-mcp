@@ -38,7 +38,8 @@ If your model doesn't automatically invoke PSI MCP, you can be explicit:
 ```
 
 ## Enabling PSI MCP in the setting
-<img width="1468" height="987" alt="psi-setting-screenshot" src="https://github.com/user-attachments/assets/d5dfb339-54f3-4aec-a0b0-9fa7eaeaf6c3" />
+
+<img width="700" alt="Kotlin PSI MCP Setting page screenshot" src="https://github.com/user-attachments/assets/2530c24c-48fa-40ab-8bb2-fb4864b0e25f" />
 
 If you have multiple projects opened, you can use the dropdown box (shown above) to select which project to be connected to the PSI MCP.
 
