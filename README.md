@@ -38,7 +38,7 @@ If your model doesn't automatically invoke PSI MCP, you can be explicit:
 ```
 
 ## Enabling PSI MCP in the setting
-<img width="1468" height="987" alt="Screenshot 2026-08-18 at 10 02 10" src="https://github.com/user-attachments/assets/32bc6e77-56cb-4b34-8668-55ab99f59e72" />
+<img width="1468" height="987" alt="psi-setting-screenshot" src="https://github.com/user-attachments/assets/d5dfb339-54f3-4aec-a0b0-9fa7eaeaf6c3" />
 
 If you have multiple projects opened, you can use the dropdown box (shown above) to select which project to be connected to the PSI MCP.
 
