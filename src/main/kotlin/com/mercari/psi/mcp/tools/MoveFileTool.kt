@@ -278,17 +278,6 @@ class MoveFileTool : Tool {
         ApplicationManager.getApplication().invokeAndWait {
             CommandProcessor.getInstance().executeCommand(project, {
                 try {
-                    // The platform processor delegates all Kotlin-specific work (package
-                    // directive update, reference retargeting) to the Kotlin plugin's
-                    // MoveFileHandler extension, in both K1 and K2 mode. The K1-only
-                    // KotlinAwareMoveFilesOrDirectoriesProcessor wrapper was removed from
-                    // the Kotlin plugin in 2026.2, and the marking it added on top of this
-                    // class only affects multi-file moves — never the single-file move here.
-                    //
-                    // prepareSuccessfulCallback must stay null: a non-null callback makes
-                    // BaseRefactoringProcessor.showConflicts pop a modal ConflictsDialog,
-                    // which would hang this headless HTTP request. With null, conflicts
-                    // are skipped and the move proceeds (the pre-2026.2 behavior).
                     val processor = MoveFilesOrDirectoriesProcessor(
                         project,
                         arrayOf(psiFile),
