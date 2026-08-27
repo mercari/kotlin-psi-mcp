@@ -105,8 +105,8 @@ intellijPlatform {
             // Android Studio's first 262-based builds are the Rabbit canaries
             // (2026.2.1 Canary, platformBuild 262.9437) — inside the declared range
             // but not verifiable by download here (see naming-convention note below).
-            // Version -> platformBuild
-            // mapping comes from https://jb.gg/android-studio-releases-list.xml
+            // Version -> platformBuild mapping comes from
+            // https://jb.gg/android-studio-releases-list.xml
             // (the <platformBuild> element); AS resolves through
             // androidStudioInstallers(), so it needs useInstaller = true (default)
             // rather than the archive used for IC above.
@@ -116,8 +116,9 @@ intellijPlatform {
             // (android-studio-panda4-mac_arm.dmg) instead of the version, which
             // this plugin's URL pattern cannot build. The fix landed in plugin
             // 2.12.0 ("handle the new archive name convention"), but 2.12.0+
-            // require Gradle 9 — so covering 253/261 by download means upgrading
-            // Gradle first. Until then, 261 is covered via the local install below.
+            // require Gradle 9 — so covering 253 and newer by download means
+            // upgrading Gradle first. Until then, those are covered via the local
+            // install note below.
             ide(IntelliJPlatformType.AndroidStudio, "2025.1.4.8")
             ide(IntelliJPlatformType.AndroidStudio, "2025.2.3.9")
 
