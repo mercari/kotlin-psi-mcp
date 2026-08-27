@@ -47,7 +47,7 @@ intellijPlatform {
         version = project.version.toString()
         ideaVersion {
             sinceBuild = "251"
-            untilBuild = "261.*"
+            untilBuild = "262.*"
         }
     }
 
@@ -76,21 +76,21 @@ intellijPlatform {
         // useInstaller = false pulls the repackaged archive instead of the macOS
         // .dmg installer, which is not published for every version.
         //
-        // The matrix covers exactly the declared compatibility range (251-261.*).
+        // The matrix covers exactly the declared compatibility range (251-262.*).
         //
-        // 2026.2 (262) is deliberately NOT here: it sits above untilBuild, and the
-        // plugin currently FAILS on it — MoveFileTool references
-        // org.jetbrains.kotlin.idea.refactoring.move.KotlinAwareMoveFilesOrDirectoriesProcessor,
-        // which no longer resolves in 262, so `move-file` would throw
-        // NoSuchClassError at runtime. Fix that before widening untilBuild, and add
-        // the 262 entry back here to confirm. To check it ad hoc without failing the
-        // build, add the line below and run with failureLevel relaxed:
-        //   ide(IntelliJPlatformType.IntellijIdeaCommunity, "2026.2.1", useInstaller = false)
+        // 262 note: 2026.2 removed the Kotlin plugin's K1 sources entirely
+        // (intellij-community 9bc28debb2, "[kotlin] remove k1 sources"), which took
+        // org.jetbrains.kotlin.idea.refactoring.move.KotlinAwareMoveFilesOrDirectoriesProcessor
+        // with it. MoveFileTool now uses the platform's MoveFilesOrDirectoriesProcessor
+        // instead (the Kotlin-specific move work happens in the Kotlin plugin's
+        // MoveFileHandler extension either way), so 262 is inside the supported range
+        // and verified below.
         ides {
             ide(IntelliJPlatformType.IntellijIdeaCommunity, "2025.1", useInstaller = false)
             ide(IntelliJPlatformType.IntellijIdeaCommunity, "2025.2.6", useInstaller = false)
             ide(IntelliJPlatformType.IntellijIdeaCommunity, "2025.3.6.1", useInstaller = false)
             ide(IntelliJPlatformType.IntellijIdeaCommunity, "2026.1.5", useInstaller = false)
+            ide(IntelliJPlatformType.IntellijIdeaCommunity, "2026.2.1", useInstaller = false)
 
             // Android Studio ships a different platform build than IntelliJ of the
             // same nominal year, with its own Kotlin/Java/Gradle plugin versions —
@@ -102,8 +102,10 @@ intellijPlatform {
             //   253 -> 2025.3.4.6  (Panda 4)
             //   261 -> 2026.1.3.7  (Quail 3)
             //
-            // Android Studio has no 262 build in any channel yet, so AS users are
-            // entirely within the declared 251-261.* range. Version -> platformBuild
+            // Android Studio's first 262-based builds are the Rabbit canaries
+            // (2026.2.1 Canary, platformBuild 262.9437) — inside the declared range
+            // but not verifiable by download here (see naming-convention note below).
+            // Version -> platformBuild
             // mapping comes from https://jb.gg/android-studio-releases-list.xml
             // (the <platformBuild> element); AS resolves through
             // androidStudioInstallers(), so it needs useInstaller = true (default)

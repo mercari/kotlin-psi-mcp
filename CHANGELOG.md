@@ -10,6 +10,15 @@ have not yet been released.
 
 ## [Unreleased]
 
+### Changed
+
+- Support IDE 2026.2 (262): compatibility range is now 251–262.\*. `move-file`
+  switched from the Kotlin plugin's K1-only
+  `KotlinAwareMoveFilesOrDirectoriesProcessor` (removed in 2026.2) to the
+  platform's `MoveFilesOrDirectoriesProcessor`; the Kotlin-specific move logic
+  runs in the Kotlin plugin's `MoveFileHandler` extension either way.
+  ([#3](https://github.com/mercari/kotlin-psi-mcp/issues/3))
+
 ## [0.1.0] - 2026-08-13
 
 Initial public release. The project began as an internal tool and is published
