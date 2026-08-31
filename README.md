@@ -1,4 +1,4 @@
-# Android Studio / IntelliJ PSI MCP Server
+# Kotlin PSI MCP Server
 
 Bring Android Studio and IntelliJ's powerful semantic code analysis to AI assistants via the Model Context Protocol (MCP).
 
