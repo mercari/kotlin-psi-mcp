@@ -22,6 +22,11 @@
     ]]></description>
 
     <change-notes><![CDATA[
+    <em>Version 0.1.1</em>
+    <ul>
+        <li>Support IDE 2026.2 (262), including Android Studio Rabbit</li>
+        <li>move-file uses the platform move processor (the Kotlin K1 one was removed in 2026.2)</li>
+    </ul>
     <em>Version 0.1.0</em>
     <ul>
         <li>Initial public release</li>

@@ -10,6 +10,8 @@ have not yet been released.
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-10-07
+
 ### Changed
 
 - Support IDE 2026.2 (262): compatibility range is now 251–262.\*. `move-file`
