@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "com.mercari.psi.mcp"
-version = "0.1.0"
+version = "0.1.1"
 
 java {
     sourceCompatibility = JavaVersion.VERSION_21
@@ -101,10 +101,10 @@ intellijPlatform {
             //   252 -> 2025.2.3.9  (Otter 3 Feature Drop)
             //   253 -> 2025.3.4.6  (Panda 4)
             //   261 -> 2026.1.3.7  (Quail 3)
+            //   262 -> 2026.2.1.8  (Rabbit 1, platformBuild 262.9437.185)
             //
-            // Android Studio's first 262-based builds are the Rabbit canaries
-            // (2026.2.1 Canary, platformBuild 262.9437) — inside the declared range
-            // but not verifiable by download here (see naming-convention note below).
+            // 253 and newer are not verifiable by download here (see
+            // naming-convention note below); they are verified locally instead.
             // Version -> platformBuild mapping comes from
             // https://jb.gg/android-studio-releases-list.xml
             // (the <platformBuild> element); AS resolves through
