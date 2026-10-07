@@ -27,11 +27,11 @@ internal const val DUMB_MODE_MESSAGE =
  */
 internal const val NO_PROJECT_MESSAGE =
     "No project is being served: either no project is open, or several are open and none is " +
-    "selected. Pick the intended project in Settings ▸ Tools ▸ PSI MCP Server."
+    "selected. Pick the intended project in Settings ▸ Tools ▸ Kotlin PSI MCP."
 
 /**
  * The project every tool resolves against: the one the human selected in
- * Settings ▸ Tools ▸ PSI MCP Server (or the sole open project as a default).
+ * Settings ▸ Tools ▸ Kotlin PSI MCP (or the sole open project as a default).
  *
  * Returns null when there is no unambiguous target — no project open, or
  * several open with no valid selection — matching the old

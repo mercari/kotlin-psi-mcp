@@ -39,7 +39,7 @@ import java.io.File
  *
  * The server binds ONE fixed port ([PORT]) per machine — the successful bind
  * is the machine-wide mutex, so exactly one IDE process serves at a time. The
- * human controls it from Settings ▸ Tools ▸ PSI MCP Server:
+ * human controls it from Settings ▸ Tools ▸ Kotlin PSI MCP:
  *
  *  - [enabled]              — master on/off switch for this IDE instance.
  *  - [selectedProjectPath]  — which open project tools resolve against.

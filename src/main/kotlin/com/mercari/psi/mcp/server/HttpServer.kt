@@ -199,7 +199,7 @@ class PsiHttpServer(private val port: Int = 51234) {
     private val serverInstructions =
         "This server exposes IntelliJ/Android Studio PSI analysis for a SINGLE selected project, bound " +
                 "to the fixed HTTP port $port. One IDE instance owns the port at a time; which project it serves " +
-                "is chosen by the human in Settings ▸ Tools ▸ PSI MCP Server (enable switch + project dropdown). " +
+                "is chosen by the human in Settings ▸ Tools ▸ Kotlin PSI MCP (enable switch + project dropdown). " +
                 "At the START of each session — and again whenever a result looks wrong (a symbol you expect to " +
                 "resolve returns \"could not resolve\" or \"file not indexed\", or find-usages comes back empty) — " +
                 "call the 'check-sync-status' tool with the absolute root path of the project you intend to work " +
