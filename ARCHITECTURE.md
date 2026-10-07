@@ -167,7 +167,7 @@ The HTTP port is fixed at **51234** (one server owns the port per machine).
 
 ## Packaging & Distribution
 
-A single IntelliJ plugin ZIP (`build/distributions/jetbrain-psi-plugin-<version>.zip`),
+A single IntelliJ plugin ZIP (`build/distributions/kotlin-psi-mcp-<version>.zip`),
 installed via *Settings ▸ Plugins ▸ Install Plugin from Disk*. The IntelliJ
 Platform APIs the plugin compiles against are provided by the host IDE at
 runtime and are not redistributed. See `THIRD-PARTY-NOTICES.md` for bundled

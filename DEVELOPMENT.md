@@ -26,7 +26,7 @@ over HTTP.
 ## Building
 
 ```bash
-./gradlew buildPlugin      # -> build/distributions/jetbrain-psi-plugin-<version>.zip
+./gradlew buildPlugin      # -> build/distributions/kotlin-psi-mcp-<version>.zip
 ./gradlew compileKotlin    # fast compile check
 ./gradlew verifyPlugin     # IntelliJ plugin structure/compat checks
 ```
@@ -103,7 +103,7 @@ Plugin Verifier CLI directly (the jar is already in the Gradle cache):
 
 ```bash
 java -jar ~/.gradle/caches/modules-2/files-2.1/org.jetbrains.intellij.plugins/verifier-cli/1.409/*/verifier-cli-1.409-all.jar \
-  check-plugin release/jetbrain-psi-plugin-<version>.zip \
+  check-plugin release/kotlin-psi-mcp-<version>.zip \
   "/path/to/Android Studio.app/Contents"
 ```
 
@@ -151,7 +151,7 @@ See the Release Workflow section below for tagging and publishing a release.
 ## Release Workflow
 
 Releases are plugin-only. Each release ships one artifact:
-`build/distributions/jetbrain-psi-plugin-x.y.z.zip`.
+`build/distributions/kotlin-psi-mcp-x.y.z.zip`.
 
 1. Bump the version: `make bump-plugin-patch` (or `minor` / `major`).
 2. Build: `make build` (runs `./gradlew buildPlugin`).

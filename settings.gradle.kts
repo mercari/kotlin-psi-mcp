@@ -1,1 +1,1 @@
-rootProject.name = "jetbrains-psi-mcp-server"
+rootProject.name = "kotlin-psi-mcp"
