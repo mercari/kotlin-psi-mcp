@@ -155,7 +155,7 @@ tasks {
     }
 
     buildPlugin {
-        archiveBaseName.set("jetbrain-psi-plugin")
+        archiveBaseName.set("kotlin-psi-mcp")
     }
 
     // Ship licensing material inside the plugin jar (lib/*.jar!/META-INF) so the

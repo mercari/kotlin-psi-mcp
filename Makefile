@@ -15,7 +15,7 @@ build:
 
 package:
 	mkdir -p release
-	cp build/distributions/jetbrain-psi-plugin-$(PLUGIN_VERSION).zip release/
+	cp build/distributions/kotlin-psi-mcp-$(PLUGIN_VERSION).zip release/
 
 versions:
 	@echo "Plugin: v$(PLUGIN_VERSION)"
