@@ -8,7 +8,7 @@ This plugin requires an IDE that bundles the Kotlin, Java, and Gradle plugins, a
 
 ## Quick Start
 1. Install the Android Studio plugin:
-   - Download `psi-plugin-x.y.z.zip` from [releases](https://github.com/mercari/kotlin-psi-mcp/releases)
+   - Download `kotlin-psi-mcp-x.y.z.zip` from [releases](https://github.com/mercari/kotlin-psi-mcp/releases)
    - Install in Android Studio: `Settings > Plugins > Install Plugin from Disk`
    - Restart IDE
    - (optional) In `Settings > Tools > Kotlin PSI MCP`, choose which open project the server serves (the HTTP port is fixed at `51234`)
