@@ -1,7 +1,7 @@
 # Architecture Guide
 
 This document covers the technical architecture, design decisions, and
-implementation details of the PSI MCP Server plugin.
+implementation details of the Kotlin PSI MCP plugin.
 
 ## System Architecture
 
@@ -35,7 +35,7 @@ All classes live under `com.mercari.psi.mcp`:
 
 4. **`tools.*`** — one class per MCP tool, each implementing the `Tool` interface.
 
-5. **`settings.PsiMcpConfigurable`** — the Settings ▸ Tools ▸ PSI MCP Server UI
+5. **`settings.PsiMcpConfigurable`** — the Settings ▸ Tools ▸ Kotlin PSI MCP UI
    (application-level: the enable switch + served-project dropdown are
    machine-wide).
 

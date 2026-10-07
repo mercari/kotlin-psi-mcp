@@ -10,6 +10,15 @@ have not yet been released.
 
 ## [Unreleased]
 
+### Changed
+
+- Rename the plugin's display name from "PSI MCP Server" to "Kotlin PSI MCP",
+  matching its [Marketplace listing](https://plugins.jetbrains.com/plugin/33755-kotlin-psi-mcp).
+  "PSI MCP Server" is the name of an unrelated Marketplace plugin, so the IDE's
+  plugin page could resolve to that listing. The settings page moves to
+  Settings ▸ Tools ▸ Kotlin PSI MCP; the plugin id and saved settings are
+  unchanged.
+
 ## [0.1.1] - 2026-10-07
 
 ### Changed

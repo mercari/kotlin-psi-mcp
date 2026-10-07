@@ -11,7 +11,7 @@ This plugin requires an IDE that bundles the Kotlin, Java, and Gradle plugins, a
    - Download `psi-plugin-x.y.z.zip` from [releases](https://github.com/mercari/kotlin-psi-mcp/releases)
    - Install in Android Studio: `Settings > Plugins > Install Plugin from Disk`
    - Restart IDE
-   - (optional) In `Settings > Tools > PSI MCP Server`, choose which open project the server serves (the HTTP port is fixed at `51234`)
+   - (optional) In `Settings > Tools > Kotlin PSI MCP`, choose which open project the server serves (the HTTP port is fixed at `51234`)
 
 2. Point your AI assistant at the plugin's HTTP MCP endpoint. For Claude Code, in your claude config file:
 

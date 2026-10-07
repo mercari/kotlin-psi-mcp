@@ -50,7 +50,7 @@ class CheckSyncStatusTool : Tool {
         "project's root against root_project_path) and state (SMART_MODE = indexed and ready; " +
         "DUMB_MODE = still indexing, so index-backed resolution such as cross-module find-declaration " +
         "and find-usages will fail — wait and retry). MISMATCH, or 'no project served', means the wrong " +
-        "project is selected — pick the intended one in Settings ▸ Tools ▸ PSI MCP Server (the served " +
+        "project is selected — pick the intended one in Settings ▸ Tools ▸ Kotlin PSI MCP (the served " +
         "project dropdown); availableProjects lists what is open to choose from. CAVEAT: SMART_MODE " +
         "reflects indexing state only, not freshness — files changed outside the IDE (e.g. git " +
         "checkout) may not be picked up; if you just did that, run \"Sync Gradle Project\" in the IDE " +
@@ -106,7 +106,7 @@ class CheckSyncStatusTool : Tool {
                             "No project is open on this port. Open the project in Android Studio."
                         else ->
                             "No single project is selected to serve, but ${open.size} are open. " +
-                            "Pick the one you want in Settings ▸ Tools ▸ PSI MCP Server (served project " +
+                            "Pick the one you want in Settings ▸ Tools ▸ Kotlin PSI MCP (served project " +
                             "dropdown). Open projects: ${available.joinToString { it.name }}."
                     },
                     error = "No served project"
@@ -140,7 +140,7 @@ class CheckSyncStatusTool : Tool {
         match == "MISMATCH" ->
             "MISMATCH: this port serves project '$name' at ${baseCanon ?: "<unknown base path>"}, " +
             "not the expected root $expectedCanon. A different project is selected — pick the intended " +
-            "one in Settings ▸ Tools ▸ PSI MCP Server, or (if it is open in another IDE) enable the " +
+            "one in Settings ▸ Tools ▸ Kotlin PSI MCP, or (if it is open in another IDE) enable the " +
             "server there after disabling it here."
         state == "DUMB_MODE" ->
             "Project '$name' matches, but it is in DUMB_MODE (indexing / not ready). Index-backed " +

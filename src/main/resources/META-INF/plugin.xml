@@ -1,6 +1,6 @@
 <idea-plugin>
     <id>com.mercari.psi.mcp</id>
-    <name>PSI MCP Server</name>
+    <name>Kotlin PSI MCP</name>
     <!-- <version> is injected at build time by patchPluginXml from build.gradle.kts (project.version). -->
     <vendor email="jetbrain-plugin@mercari.com" url="https://github.com/mercari">Mercari, Inc.</vendor>
 
@@ -60,7 +60,7 @@
             parentId="tools"
             instance="com.mercari.psi.mcp.settings.PsiMcpConfigurable"
             id="PsiMcpConfigurable"
-            displayName="PSI MCP Server"/>
+            displayName="Kotlin PSI MCP"/>
     </extensions>
     
     <!-- K2 compatibility declarations -->

@@ -20,7 +20,7 @@ import javax.swing.JPanel
 import javax.swing.Box
 
 /**
- * Application-level settings page (Settings ▸ Tools ▸ PSI MCP Server).
+ * Application-level settings page (Settings ▸ Tools ▸ Kotlin PSI MCP).
  *
  * Two controls back the multi-IDE model:
  *  - the **enable** switch is this IDE's bid to own the single fixed port; and
@@ -41,10 +41,10 @@ class PsiMcpConfigurable : Configurable {
     private lateinit var reconnectButton: JButton
     private lateinit var mainPanel: JPanel
 
-    override fun getDisplayName(): String = "PSI MCP Server"
+    override fun getDisplayName(): String = "Kotlin PSI MCP"
 
     override fun createComponent(): JComponent {
-        enabledCheckBox = JBCheckBox("Enable PSI MCP Server (serve on port ${PsiMcpServerManager.PORT})", manager.isEnabled)
+        enabledCheckBox = JBCheckBox("Enable Kotlin PSI MCP (serve on port ${PsiMcpServerManager.PORT})", manager.isEnabled)
 
         projectCombo = ComboBox(DefaultComboBoxModel(manager.openProjectsSnapshot().toTypedArray())).apply {
             renderer = SimpleListCellRenderer.create<Project>("(no project open)") { value ->

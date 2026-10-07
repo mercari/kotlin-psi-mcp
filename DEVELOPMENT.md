@@ -1,6 +1,6 @@
 # Development Guide
 
-This guide covers building, testing, and contributing to the PSI MCP Server
+This guide covers building, testing, and contributing to the Kotlin PSI MCP
 plugin.
 
 ## Project Structure
