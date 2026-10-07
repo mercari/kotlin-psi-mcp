@@ -20,6 +20,9 @@ have not yet been released.
   platform's `MoveFilesOrDirectoriesProcessor`; the Kotlin-specific move logic
   runs in the Kotlin plugin's `MoveFileHandler` extension either way.
   ([#3](https://github.com/mercari/kotlin-psi-mcp/issues/3))
+- Bump the plugin version to 0.1.1 so Android Studio Rabbit 1 | 2026.2.1
+  (262.9437.185) can install it; 0.1.0 was capped at 261.\*.
+  ([#8](https://github.com/mercari/kotlin-psi-mcp/pull/8))
 
 ## [0.1.0] - 2026-08-13
 
