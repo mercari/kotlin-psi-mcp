@@ -115,14 +115,16 @@ Tools are registered in `PsiMcpServerManager` when the server starts, e.g.:
 ```kotlin
 server.registerTool("find-usages", FindUsagesTool())
 server.registerTool("find-declaration", FindDeclarationTool())
-// ...22 tools total
+// ...28 tools total
 ```
 
 The current set spans navigation/analysis (`find-usages`, `find-declaration`,
 `find-implementations`, `find-symbols`, `get-containing-context`,
 `get-call-hierarchy`, `get-type-info`, `get-kdoc`, `get-diagnostics`),
 project structure (`module-search`, `check-sync-status`, `gradle-sync`), and
-refactoring/edits (`rename`, `safe-delete`, `move-file`, `extract-interface`,
+VCS changelists (`list-changelists`, `create-changelist`,
+`set-active-changelist`, `move-to-changelist`, `rename-changelist`,
+`delete-changelist`), and refactoring/edits (`rename`, `safe-delete`, `move-file`, `extract-interface`,
 `add-import`, `add-parameter`, `find-import-suggestions`, `organize-imports`,
 `format-code`, `apply-quick-fix`). See `README.md` for the user-facing list.
 

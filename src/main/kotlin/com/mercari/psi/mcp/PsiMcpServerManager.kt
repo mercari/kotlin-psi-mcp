@@ -2,6 +2,12 @@ package com.mercari.psi.mcp
 
 import com.mercari.psi.mcp.server.PsiHttpServer
 import com.mercari.psi.mcp.tools.FindUsagesTool
+import com.mercari.psi.mcp.tools.ListChangelistsTool
+import com.mercari.psi.mcp.tools.CreateChangelistTool
+import com.mercari.psi.mcp.tools.SetActiveChangelistTool
+import com.mercari.psi.mcp.tools.MoveToChangelistTool
+import com.mercari.psi.mcp.tools.RenameChangelistTool
+import com.mercari.psi.mcp.tools.DeleteChangelistTool
 import com.mercari.psi.mcp.tools.FindSymbolsTool
 import com.mercari.psi.mcp.tools.GetContainingContextTool
 import com.mercari.psi.mcp.tools.FindDeclarationTool
@@ -233,6 +239,12 @@ class PsiMcpServerManager :
         server.registerTool("find-import-suggestions", FindImportSuggestionsTool())
         server.registerTool("format-code", FormatCodeTool())
         server.registerTool("check-sync-status", CheckSyncStatusTool())
+        server.registerTool("list-changelists", ListChangelistsTool())
+        server.registerTool("create-changelist", CreateChangelistTool())
+        server.registerTool("set-active-changelist", SetActiveChangelistTool())
+        server.registerTool("move-to-changelist", MoveToChangelistTool())
+        server.registerTool("rename-changelist", RenameChangelistTool())
+        server.registerTool("delete-changelist", DeleteChangelistTool())
     }
 
     private fun describeBindFailure(e: Exception): String =

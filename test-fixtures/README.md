@@ -547,3 +547,21 @@ curl -s -o /dev/null -w '%{http_code}\n' --max-time 3 \
 `/health` that works on `127.0.0.1` refuses to connect on your LAN IP. `curl` uses
 the `Host` you pass via `-H` even when connecting to `127.0.0.1`, which is what
 makes test 5 a valid rebind simulation.
+
+## Changelist tools
+
+These work on whatever the IDE reports as uncommitted changes, so they need a
+project under version control (the fixture lives inside this repo's git root).
+Smoke test with curl against `/api/tools/<name>`; restore state afterwards.
+
+| Step | Call | Expect |
+|---|---|---|
+| 1 | `create-changelist {"name":"Screen A"}` | `success:true`, `isActive:false` |
+| 2 | same call again | `success:false`, "already exists" |
+| 3 | `move-to-changelist {"name":"Screen A","paths":["<modified file>","missing.kt"]}` | file in `moved`; `missing.kt` in `skipped` ("file not found") |
+| 4 | `rename-changelist {"name":"Screen A","new_name":"Screen A v2"}` | renamed, file count preserved |
+| 5 | `set-active-changelist {"name":"Screen A v2"}` | `previous` is the old active list |
+| 6 | `delete-changelist {"name":"Screen A v2"}` | refused: active list |
+| 7 | re-activate the original list, repeat step 6 | refused: holds files, pass `move_to` |
+| 8 | `delete-changelist {"name":"Screen A v2","move_to":"<original>"}` | `success:true`, files moved back |
+| 9 | create an untracked file, `move-to-changelist {..., "add_unversioned":true}` | file listed in `moved` and staged; without the flag it is `skipped` |

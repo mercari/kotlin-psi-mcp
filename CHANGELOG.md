@@ -10,6 +10,15 @@ have not yet been released.
 
 ## [Unreleased]
 
+### Added
+
+- Changelist tools: `list-changelists`, `create-changelist`,
+  `set-active-changelist`, `move-to-changelist`, `rename-changelist` and
+  `delete-changelist` expose the IDE's Changelists to MCP clients. They let an
+  agent keep its edits for one task (for example one screen) apart from other
+  uncommitted work in the same checkout, without a separate git worktree or
+  Gradle build.
+
 ### Changed
 
 - Rename the plugin's display name from "PSI MCP Server" to "Kotlin PSI MCP",
