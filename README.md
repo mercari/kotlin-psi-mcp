@@ -84,6 +84,14 @@ $ curl -s -X POST http://localhost:51234/mcp \
 - `check-sync-status` - Verify the served project matches and has finished indexing
 - `gradle-sync` - Trigger a Gradle sync
 
+**VCS changelists** (IDE Changelists, so independent changes can share one checkout and one Gradle build):
+- `list-changelists` - List changelists, which one is active, and the files in each (optionally unversioned files)
+- `create-changelist` - Create a changelist, optionally making it active
+- `set-active-changelist` - Choose which changelist newly detected changes land in
+- `move-to-changelist` - Move changed files into a changelist (can add unversioned files to VCS)
+- `rename-changelist` - Rename a changelist or edit its comment
+- `delete-changelist` - Delete a non-active changelist, moving any files to another one (never touches file contents)
+
 **Refactoring & edits:**
 - `rename` - Rename a symbol across the project
 - `safe-delete` - Delete a symbol if it is unused (reports blockers)
