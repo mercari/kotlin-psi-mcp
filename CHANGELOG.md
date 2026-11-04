@@ -10,15 +10,6 @@ have not yet been released.
 
 ## [Unreleased]
 
-### Changed
-
-- Rename the plugin's display name from "PSI MCP Server" to "Kotlin PSI MCP",
-  matching its [Marketplace listing](https://plugins.jetbrains.com/plugin/33755-kotlin-psi-mcp).
-  "PSI MCP Server" is the name of an unrelated Marketplace plugin, so the IDE's
-  plugin page could resolve to that listing. The settings page moves to
-  Settings ▸ Tools ▸ Kotlin PSI MCP; the plugin id and saved settings are
-  unchanged.
-
 ## [0.1.1] - 2026-10-07
 
 ### Changed
@@ -32,6 +23,18 @@ have not yet been released.
 - Bump the plugin version to 0.1.1 so Android Studio Rabbit 1 | 2026.2.1
   (262.9437.185) can install it; 0.1.0 was capped at 261.\*.
   ([#8](https://github.com/mercari/kotlin-psi-mcp/pull/8))
+- Name the plugin archive `kotlin-psi-mcp-<version>.zip` (containing
+  `kotlin-psi-mcp/lib/kotlin-psi-mcp-<version>.jar`), matching the Marketplace
+  listing and the 0.1.0 release asset; builds from the repo previously produced
+  `jetbrain-psi-plugin-<version>.zip`.
+  ([#9](https://github.com/mercari/kotlin-psi-mcp/pull/9))
+- Rename the plugin's display name from "PSI MCP Server" to "Kotlin PSI MCP",
+  matching its [Marketplace listing](https://plugins.jetbrains.com/plugin/33755-kotlin-psi-mcp).
+  "PSI MCP Server" is the name of an unrelated Marketplace plugin, so the IDE's
+  plugin page could resolve to that listing. The settings page moves to
+  Settings ▸ Tools ▸ Kotlin PSI MCP; the plugin id and saved settings are
+  unchanged.
+  ([#10](https://github.com/mercari/kotlin-psi-mcp/pull/10))
 
 ## [0.1.0] - 2026-08-13
 
